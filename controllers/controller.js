@@ -1,4 +1,5 @@
 const taskModel = require('../model/taskModel');
+const configModel = require('../model/taskModel');
 const { startWatcher,stop } = require('../services/runTask');
 
 
@@ -51,6 +52,21 @@ const stopTask = async (req, res) => {
   }
 };
 
+// 
 
+const configData= async (req, res) => {
+  try{
+  let { directory, interval, magicString } = req.body;
 
-module.exports = { startTask, stopTask ,getTaskDetails };
+  const config = await configModal.findOneAndUpdate(
+    {},
+    { directory:`./${directory}`, interval:`*/${interval} * * * *`, magicString },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+  );
+  res.json({ message: 'Configuration updated successfully',config });
+} catch (err) {
+  res.status(500).json({ error: err.message });
+}
+}
+
+module.exports = { startTask, stopTask ,getTaskDetails ,configData};
