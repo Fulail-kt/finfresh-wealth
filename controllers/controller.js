@@ -1,18 +1,6 @@
 const taskModel = require('../model/taskModel');
 const configModel = require('../model/taskModel');
-const { startWatcher,stop } = require('../services/runTask');
-
-
-// const getConfig = (req, res) => res.json(currentConfig);
-
-const updateConfig = (req, res) => {
-  const { directory, interval, magicString } = req.body;
-  if (directory) currentConfig.directory = directory;
-  if (interval) currentConfig.interval = interval;
-  if (magicString) currentConfig.magicString = magicString;
-  scheduleTask(currentConfig.directory, currentConfig.interval, currentConfig.magicString);
-  res.json(currentConfig);
-};
+const { startWatcher, stop } = require('../services/runTask');
 
 
 // function for get all task details
@@ -54,19 +42,19 @@ const stopTask = async (req, res) => {
 
 // 
 
-const configData= async (req, res) => {
-  try{
-  let { directory, interval, magicString } = req.body;
+const configData = async (req, res) => {
+  try {
+    let { directory, interval, magicString } = req.body;
 
-  const config = await configModal.findOneAndUpdate(
-    {},
-    { directory:`./${directory}`, interval:`*/${interval} * * * *`, magicString },
-    { upsert: true, new: true, setDefaultsOnInsert: true }
-  );
-  res.json({ message: 'Configuration updated successfully',config });
-} catch (err) {
-  res.status(500).json({ error: err.message });
-}
+    const config = await configModel.findOneAndUpdate(
+      {},
+      { directory: `./${directory}`, interval: `*/${interval} * * * *`, magicString },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    res.json({ message: 'Configuration updated successfully', config });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 }
 
-module.exports = { startTask, stopTask ,getTaskDetails ,configData};
+module.exports = { startTask, stopTask, getTaskDetails, configData };
