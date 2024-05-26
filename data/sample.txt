@@ -1,0 +1,6 @@
+This is a sample file to test the DirWatcher application.
+Magic String: your magic string
+This line does not contain the magic string.
+Another Magic String: your magic string
+Yet another line without the magic string.
+Final Magic String: your magic string

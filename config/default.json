@@ -1,0 +1,7 @@
+{
+    "watcher": {
+        "directory": "./data",
+        "interval": "*/1 * * * *",  
+        "magicString": "Magic"
+    }
+}
