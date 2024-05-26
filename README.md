@@ -43,6 +43,7 @@ It uses Express for handling API requests, Chokidar for watching the directory, 
 1. Start Task
    - URL: `/start`
    - Method: `POST`
+   - exp: `http://localhost:PORT/api/start`
 
 2. Stop Task
    - URL: `/stop`
