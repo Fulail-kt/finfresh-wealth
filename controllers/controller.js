@@ -43,7 +43,6 @@ const stopTask = async (req, res) => {
 
 // function to Update configuration Data
 
-
 const configData = async (req, res) => {
   req.checkBody('directory', 'Directory is required').notEmpty();
   req.checkBody('interval', 'Interval is required').notEmpty();
