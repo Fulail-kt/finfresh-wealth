@@ -47,21 +47,27 @@ const stopTask = async (req, res) => {
 // function to Update configuration Data
 
 const configData = async (req, res) => {
-  req.checkBody('directory', 'Directory is required').notEmpty();
-  req.checkBody('interval', 'Interval is required').notEmpty();
-  req.checkBody('magicString', 'Magic String is required').notEmpty();
+  const { directory, interval, magicString } = req.body;
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+  if (!directory || typeof directory !== 'string' || !directory.trim()) {
+    return res.status(400).json({ error: 'Directory is required' });
+  }
+  if (!interval || typeof interval !== 'string' || !interval.trim()) {
+    return res.status(400).json({ error: 'Interval is required' });
+  }
+  if (!magicString || typeof magicString !== 'string' || !magicString.trim()) {
+    return res.status(400).json({ error: 'Magic String is required' });
   }
 
-  try {
-    let { directory, interval, magicString } = req.body;
 
+  const trimmedDirectory = directory.trim();
+  const trimmedInterval = interval.trim();
+  const trimmedMagicString = magicString.trim();
+
+  try {
     const config = await configModel.findOneAndUpdate(
       {},
-      { directory: `./${directory}`, interval: `*/${interval} * * * *`, magicString },
+      { directory: `./${trimmedDirectory}`, interval: `*/${trimmedInterval} * * * *`, magicString: trimmedMagicString },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
     res.json({ message: 'Configuration updated successfully', config });
