@@ -9,6 +9,9 @@ const { validationResult } = require('express-validator');
 const getTaskDetails = async (req, res) => {
   try {
     const taskRuns = await taskModel.find().sort({ startTime: -1 });
+    if(taskRuns.length<1){
+      return res.json({message:'not have any history'})
+    }
     res.json(taskRuns);
   } catch (error) {
     console.error('Error fetching task details:', error);
