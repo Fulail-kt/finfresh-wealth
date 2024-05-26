@@ -1,5 +1,5 @@
 const taskModel = require('../model/taskModel');
-const configModel = require('../model/taskModel');
+const configModel = require('../model/configModel');
 const { startWatcher, stop } = require('../services/runTask');
 const { validationResult } = require('express-validator');
 
@@ -70,6 +70,9 @@ const configData = async (req, res) => {
       { directory: `./${trimmedDirectory}`, interval: `*/${trimmedInterval} * * * *`, magicString: trimmedMagicString },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
+
+    console.log(config)
+
     res.json({ message: 'Configuration updated successfully', config });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -20,6 +20,7 @@ const getConfig = async () => {
 
     if (config) {
       directory = path.resolve(__dirname, '..', config.directory);
+      console.log(directory,"dd")
       interval = config.interval;
       magicString = config.magicString;
     } else {
