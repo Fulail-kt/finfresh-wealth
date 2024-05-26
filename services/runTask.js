@@ -23,7 +23,10 @@ const getConfig = async () => {
       interval = config.interval;
       magicString = config.magicString;
     } else {
-      console.error('No configuration found in the database');
+      console.error('No configuration found in the database please add before start directory,interval,magicString');
+      if(watcher){
+        watcher.close()
+      }
     }
   } catch (error) {
     console.error('Error fetching configuration:', error.message);

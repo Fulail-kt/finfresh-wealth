@@ -1,6 +1,7 @@
 const taskModel = require('../model/taskModel');
 const configModel = require('../model/taskModel');
 const { startWatcher, stop } = require('../services/runTask');
+const { validationResult } = require('express-validator');
 
 
 // function for get all task details
@@ -42,7 +43,17 @@ const stopTask = async (req, res) => {
 
 // 
 
+
 const configData = async (req, res) => {
+  req.checkBody('directory', 'Directory is required').notEmpty();
+  req.checkBody('interval', 'Interval is required').notEmpty();
+  req.checkBody('magicString', 'Magic String is required').notEmpty();
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     let { directory, interval, magicString } = req.body;
 
