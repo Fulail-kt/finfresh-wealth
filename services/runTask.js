@@ -3,7 +3,6 @@ const cron = require('node-cron');
 const fs = require('fs');
 const chokidar = require('chokidar');
 const path = require('path');
-const config = require('../config/default.json');
 const TaskModel = require('../model/taskModel');
 const ConfigModel = require('../model/configModel');
 
@@ -18,12 +17,11 @@ let magicString;
 const getConfig = async () => {
   try {
     const config = await ConfigModel.findOne();
+
     if (config) {
       directory = path.resolve(__dirname, '..', config.directory);
       interval = config.interval;
       magicString = config.magicString;
-
-      console.log(config)
     } else {
       console.error('No configuration found in the database');
     }
