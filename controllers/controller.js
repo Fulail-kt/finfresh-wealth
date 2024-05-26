@@ -10,7 +10,7 @@ const getTaskDetails = async (req, res) => {
   try {
     const taskRuns = await taskModel.find().sort({ startTime: -1 });
     if(taskRuns.length<1){
-      return res.json({message:'not have any history'})
+      return res.json({message:'There is no task'})
     }
     res.json(taskRuns);
   } catch (error) {
