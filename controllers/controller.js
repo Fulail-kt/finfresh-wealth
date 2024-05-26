@@ -41,7 +41,7 @@ const stopTask = async (req, res) => {
   }
 };
 
-// 
+// function to Update configuration Data
 
 
 const configData = async (req, res) => {
